@@ -1,0 +1,157 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <body>
+    <style>
+      .tax-info{
+        display: none;
+      }
+      .tax-toggle{
+        border:  1px solid black;
+        border-radius: 1rem ;
+        height: 3.5rem;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        margin-left: 0.4rem ;
+        white-space: nowrap;
+        overflow: hidden;
+      }       
+      .scrollmenu{
+        background-color: white;
+        overflow: scroll;
+        /* width: 147vh; */
+        width: 100%;
+        white-space: nowrap;
+      }
+      .scrollmenu::-webkit-scrollbar{
+          display: none;
+      }
+      div.scrollmenu {
+        background-color: white;
+        overflow: auto;
+        white-space: nowrap;
+      }
+
+      div.scrollmenu a {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+        opacity: 0.7;
+      }
+      .contain{
+        display: flex;
+        flex-wrap: nowrap;
+      }
+
+      div.scrollmenu a:hover {
+        opacity:1;
+      }
+
+      .scrollmenu a i{
+        font-size: 1.3rem;
+      }
+
+    </style>
+    <div class="contain">
+      <div class="scrollmenu">
+        <a><div><i class="fa-solid fa-fire"></i></div>
+        <div>Trending</div></a>
+        <a><div><i class="fa-solid fa-bed"></i></div>
+        <div>Rooms</div></a>
+        <a><div><i class="fa-solid fa-city"></i></div>
+        <div>Cities</div></a>
+        <a><div><i class="fa-solid fa-mountain"></i></div>
+        <div>Mountains</div></a>
+        <a><div><i class="fa-solid fa-campground"></i></div>
+        <div>Camping</div></a>
+        <a><div><i class="fa-solid fa-swimmer"></i></div>
+        <div>Pools</div></a>
+        <a><div><i class="fa-solid fa-cow"></i></div>
+        <div>Valleys</div></a>  
+        <a><div><i class="fa-solid fa-snowflake"></i></div>
+        <div>Arctic</div></a>
+        <a><div><i class="fa-brands fa-fort-awesome"></i></div>
+        <div>Castles</div></a>
+        <a><div><i class="fa-solid fa-igloo"></i></div>
+        <div>Igloo</div></a>
+        <a><div><i class="fa-solid fa-ship"></i></div>
+        <div>Boat House</div></a>
+        <a><div><i class="fa-solid fa-snowflake"></i></div>
+        <div>Arctic</div></a>
+        <a><div><i class="fa-brands fa-fort-awesome"></i></div>
+        <div>Castles</div></a>
+        <a><div><i class="fa-solid fa-igloo"></i></div>
+        <div>Igloo</div></a>
+        <a><div><i class="fa-solid fa-ship"></i></div>
+        <div>Boat House</div></a>
+        <a><div><i class="fa-solid fa-fire"></i></div>
+        <div>Trending</div></a>
+        <a><div><i class="fa-solid fa-bed"></i></div>
+        <div>Rooms</div></a>
+        <a><div><i class="fa-solid fa-city"></i></div>
+        <div>Cities</div></a>
+        <a><div><i class="fa-solid fa-mountain"></i></div>
+        <div>Mountains</div></a>
+        <a><div><i class="fa-solid fa-campground"></i></div>
+        <div>Camping</div></a>
+        <a><div><i class="fa-solid fa-swimmer"></i></div>
+        <div>Pools</div></a>
+        <a><div><i class="fa-solid fa-cow"></i></div>
+        <div>Valleys</div></a>  
+        <a><div><i class="fa-solid fa-snowflake"></i></div>
+        <div>Arctic</div></a>
+        <a><div><i class="fa-brands fa-fort-awesome"></i></div>
+        <div>Castles</div></a>
+        <a><div><i class="fa-solid fa-igloo"></i></div>
+        <div>Igloo</div></a>
+        <a><div><i class="fa-solid fa-ship"></i></div>
+        <div>Boat House</div></a>
+        <a><div><i class="fa-solid fa-snowflake"></i></div>
+        <div>Arctic</div></a>
+        <a><div><i class="fa-brands fa-fort-awesome"></i></div>
+        <div>Castles</div></a>
+        <a><div><i class="fa-solid fa-igloo"></i></div>
+        <div>Igloo</div></a>
+        <a><div><i class="fa-solid fa-ship"></i></div>
+        <div>Boat House</div></a>
+      </div>
+      <!-- <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+        </div>
+      </div> -->
+    </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"> 
+        <% for(listing of allListings){ %>  
+            <a href="/listing/<%= listing._id  %>" class="listing-link">
+              <div class="card col listing-card">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+                <div class="card-body">
+                  <p class="card-text"><%=listing.title%><br>
+                    &#8377;<%=listing.price.toLocaleString("en-In")%>
+                    <i class="tax-infos">+&#8377;<%= (listing.price*18/100).toLocaleString("en-In") %> GST</i>
+                    /night
+                  </p>
+                </div>
+              </div>
+            </a>
+        <% } %>
+    </div>
+
+    <script>
+      let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+      taxSwitch.addEventListener("click",()=>{
+        let taxInfo = document.getElementsByClassName("tax-info");
+        console.log("clicked");
+        console.log(taxInfo);
+        for(info of taxInfo){
+          if(info.style.display !== "inline"){
+          info.style.display = "inline";
+          }else{
+            info.style.display = "none";
+          }
+        }
+      })
+    </script>
+  </body>
